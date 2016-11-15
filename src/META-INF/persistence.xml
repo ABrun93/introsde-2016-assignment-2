@@ -3,6 +3,7 @@
     <persistence-unit name="introsde-jpa">
     	<class>rest.server.model.Person</class>
     	<class>rest.server.model.HealthProfile</class>
+    	<class>rest.server.model.Measure</class>
         <properties>
             <!-- the jdbc driver we will use to connect to the database 
                  change it depending of what database you use -->
