@@ -4,30 +4,36 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import rest.server.dao.LifeCoachDao;
-import rest.server.model.Scope;
+import rest.server.model.Person;
+import rest.server.model.Measure;
+import rest.server.model.ScopeType;
 
 @Entity  // indicates that this class is an entity to persist in DB
-@Table(name="Measure") // to whate table must be persisted
-@NamedQuery(name="Measure.findAll", query="SELECT p FROM Measure p")
+@Table(name="Scope") // to whate table must be persisted
+@NamedQuery(name="Scope.findAll", query="SELECT p FROM Scope p")
 @XmlRootElement
-public class Measure implements Serializable {
+public class Scope implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id // defines this attributed as the one that identifies the entity
     @GeneratedValue
     @Column(name="id") // maps the following attribute to a column
     private int id;
-    @Column(name="value")
-    private float value;
-    @Column(name="date")
-    private String date;
-      
+        
     @ManyToOne
-   	@JoinColumn(name="idScope", referencedColumnName="id", insertable = true, updatable = true)
-   	private Scope scope;
+	@JoinColumn(name="idPerson", referencedColumnName="id")
+	private Person person;
+    
+    @ManyToOne
+   	@JoinColumn(name="idType", referencedColumnName="id", insertable = true, updatable = true)
+   	private ScopeType scopeType;
+    
+    @OneToMany(mappedBy="scope",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    private List<Measure> measure;
     
     // add below all the getters and setters of all the private attributes   
     public int getId() {
@@ -37,50 +43,50 @@ public class Measure implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public float getValue() {
-		return value;
-	}
-
-	public void setValue(float value) {
-		this.value = value;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
 	
 	// Transient for JAXB to avoid and infinite loop on serialization
 	@XmlTransient
-	public Scope getScope() {
-		return scope;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setScope(Scope scope) {
-		this.scope = scope;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
+	
+	public ScopeType getScopeType() {
+		return scopeType;
+	}
+
+	public void setScopeType(ScopeType scopeType) {
+		this.scopeType = scopeType;
+	}
+	
+	@XmlElementWrapper(name = "history")
+    public List<Measure> getMeasure() {
+        return measure;
+    }
+    public void setScope(List<Measure> measure) {
+        this.measure = measure;
+    }
 
 	// Database operations
-	public static Measure getMeasureById(int personId) {
+	public static Scope getScopeById(int personId) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
-        Measure p = em.find(Measure.class, personId);
+        Scope p = em.find(Scope.class, personId);
         LifeCoachDao.instance.closeConnections(em);
         return p;
     }
 
-	public static List<Measure> getAll() {
+	public static List<Scope> getAll() {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
-        List<Measure> list = em.createNamedQuery("Measure.findAll", Measure.class)
+        List<Scope> list = em.createNamedQuery("Scope.findAll", Scope.class)
             .getResultList();
         LifeCoachDao.instance.closeConnections(em);
         return list;
     }
 
-    public static Measure saveMeasure(Measure p) {
+    public static Scope saveScope(Scope p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -90,7 +96,7 @@ public class Measure implements Serializable {
         return p;
     } 
 
-    public static Measure updateMeasure(Measure p) {
+    public static Scope updateScope(Scope p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager(); 
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -100,7 +106,7 @@ public class Measure implements Serializable {
         return p;
     }
 
-    public static void removeMeasure(Measure p) {
+    public static void removeScope(Scope p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();

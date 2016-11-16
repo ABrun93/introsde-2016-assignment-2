@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import rest.server.dao.LifeCoachDao;
-import rest.server.model.HealthProfile;
+import rest.server.model.Scope;
 
 @Entity  // indicates that this class is an entity to persist in DB
 @Table(name="Person") // to whate table must be persisted
@@ -26,9 +26,9 @@ public class Person implements Serializable {
     private String firstname;
     @Column(name="birthdate")
     private String birthdate; 
-    // MappedBy must be equal to the name of the attribute in HealthProfile that maps this relation
+    // MappedBy must be equal to the name of the attribute in Measure that maps this relation
     @OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-    private List<HealthProfile> healthProfile;
+    private List<Scope> scope;
        
     public int getId() {
 		return id;
@@ -62,13 +62,13 @@ public class Person implements Serializable {
 		this.birthdate = birthdate;
 	}
 	
-	// Transient for JAXB to avoid and infinite loop on serialization
-	@XmlElementWrapper(name = "HealthProfile")
-    public List<HealthProfile> getHealthProfile() {
-        return healthProfile;
+	// Inherit elements
+	@XmlElementWrapper(name = "healthProfile")
+    public List<Scope> getScope() {
+        return scope;
     }
-    public void setHealthProfile(List<HealthProfile> param) {
-        this.healthProfile = param;
+    public void setScope(List<Scope> scope) {
+        this.scope = scope;
     }
 	
 	// Database operations

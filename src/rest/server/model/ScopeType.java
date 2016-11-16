@@ -8,33 +8,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import rest.server.dao.LifeCoachDao;
-import rest.server.model.Person;
-import rest.server.model.Measure;
+import rest.server.model.Scope;
 
 @Entity  // indicates that this class is an entity to persist in DB
-@Table(name="HealthProfile") // to whate table must be persisted
-@NamedQuery(name="HealthProfile.findAll", query="SELECT p FROM HealthProfile p")
+@Table(name="ScopeType") // to whate table must be persisted
+@NamedQuery(name="ScopeType.findAll", query="SELECT p FROM ScopeType p")
 @XmlRootElement
-public class HealthProfile implements Serializable {
+public class ScopeType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id // defines this attributed as the one that identifies the entity
     @GeneratedValue
     @Column(name="id") // maps the following attribute to a column
     private int id;
-    @Column(name="value")
-    private int value;
-    @Column(name="date")
-    private String date;
-    
-    @ManyToOne
-	@JoinColumn(name="idPerson", referencedColumnName="id")
-	private Person person;
-    
-    @ManyToOne
-   	@JoinColumn(name="idMeasure", referencedColumnName="id", insertable = true, updatable = true)
-   	private Measure measure;
-    
-    // add below all the getters and setters of all the private attributes   
+    @Column(name="type")
+    private String type;
+    // MappedBy must be equal to the name of the attribute in Measure that maps this relation
+    @OneToMany(mappedBy="scopeType")
+    private List<Scope> scope;
+       
     public int getId() {
 		return id;
 	}
@@ -43,57 +34,40 @@ public class HealthProfile implements Serializable {
 		this.id = id;
 	}
 
-	public int getValue() {
-		return value;
+	public String getType() {
+		return type;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String birthdate) {
-		this.date = birthdate;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	// Transient for JAXB to avoid and infinite loop on serialization
 	@XmlTransient
-	public Person getPerson() {
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+    public List<Scope> getScope() {
+        return scope;
+    }
+    public void setScope(List<Scope> scope) {
+        this.scope = scope;
+    }
 	
-	public Measure getMeasure() {
-		return measure;
-	}
-
-	public void setMeasure(Measure measure) {
-		this.measure = measure;
-	}
-
 	// Database operations
-	public static HealthProfile getHealthProfileById(int personId) {
+	public static ScopeType getScopeTypeById(int personId) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
-        HealthProfile p = em.find(HealthProfile.class, personId);
+        ScopeType p = em.find(ScopeType.class, personId);
         LifeCoachDao.instance.closeConnections(em);
         return p;
     }
 
-	public static List<HealthProfile> getAll() {
+	public static List<ScopeType> getAll() {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
-        List<HealthProfile> list = em.createNamedQuery("HealthProfile.findAll", HealthProfile.class)
+        List<ScopeType> list = em.createNamedQuery("ScopeType.findAll", ScopeType.class)
             .getResultList();
         LifeCoachDao.instance.closeConnections(em);
         return list;
     }
 
-    public static HealthProfile saveHealthProfile(HealthProfile p) {
+    public static ScopeType saveScopeType(ScopeType p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -103,7 +77,7 @@ public class HealthProfile implements Serializable {
         return p;
     } 
 
-    public static HealthProfile updateHealthProfile(HealthProfile p) {
+    public static ScopeType updateScopeType(ScopeType p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager(); 
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -113,7 +87,7 @@ public class HealthProfile implements Serializable {
         return p;
     }
 
-    public static void removeHealthProfile(HealthProfile p) {
+    public static void removeScopeType(ScopeType p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
