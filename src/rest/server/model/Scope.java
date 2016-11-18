@@ -32,8 +32,15 @@ public class Scope implements Serializable {
    	@JoinColumn(name="idType", referencedColumnName="id", insertable = true, updatable = true)
    	private ScopeType scopeType;
     
-    @OneToMany(mappedBy="scope",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-    private List<Measure> measure;
+    /*  Insert the history of measures in the rappresentation
+     
+	    @OneToMany(mappedBy="scope",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	    private List<Measure> measure;
+	*/
+    
+    @OneToOne
+    @JoinColumn(name="idMeasure", referencedColumnName="id")
+    private Measure measure;
     
     // add below all the getters and setters of all the private attributes   
     public int getId() {
@@ -62,11 +69,21 @@ public class Scope implements Serializable {
 		this.scopeType = scopeType;
 	}
 	
-	@XmlElementWrapper(name = "history")
-    public List<Measure> getMeasure() {
+	/* Insert the history of measures in the rappresentation
+
+		@XmlElementWrapper(name = "history")
+	    public List<Measure> getMeasure() {
+	        return measure;
+	    }
+	    public void setMeasure(List<Measure> measure) {
+	        this.measure = measure;
+	    }
+	*/
+	
+	public Measure getMeasure() {
         return measure;
     }
-    public void setScope(List<Measure> measure) {
+    public void setMeasure(Measure measure) {
         this.measure = measure;
     }
 
