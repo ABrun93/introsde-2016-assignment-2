@@ -17,13 +17,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
-import rest.server.model.ScopeType;
+import rest.server.model.MeasureType;
 
 
 @Stateless // only used if the the application is deployed in a Java EE container
 @LocalBean // only used if the the application is deployed in a Java EE container
 @Path("/measureTypes")
-public class ScopeTypeCollectionResource {
+public class MeasureTypeCollectionResource {
 	// Allows to insert contextual objects into the class,
     // e.g. ServletContext, Request, Response, UriInfo
     @Context
@@ -42,8 +42,8 @@ public class ScopeTypeCollectionResource {
     // Return the list of people to the user in the browser
     @GET
     @Produces({MediaType.TEXT_XML,  MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML })
-    public List<ScopeType> getScopeTypeList() {
+    public List<MeasureType> getMeasureTypeList() {
         System.out.println("Getting list of MeasureType...");        
-        return ScopeType.getAll();
+        return MeasureType.getAll();
     }
 }

@@ -27,14 +27,14 @@ public class PersonResource {
 
     EntityManager entityManager; // only used if the application is deployed in a Java EE container
 
-    public PersonResource(UriInfo uriInfo, Request request,int id, EntityManager em) {
+    public PersonResource(UriInfo uriInfo, Request request, int id, EntityManager em) {
         this.uriInfo = uriInfo;
         this.request = request;
         this.id = id;
         this.entityManager = em;
     }
 
-    public PersonResource(UriInfo uriInfo, Request request,int id) {
+    public PersonResource(UriInfo uriInfo, Request request, int id) {
         this.uriInfo = uriInfo;
         this.request = request;
         this.id = id;
@@ -57,7 +57,7 @@ public class PersonResource {
         Person person = this.getPersonById(id);
         if (person == null)
             throw new RuntimeException("Get: Person with " + id + " not found");
-        System.out.println("Returning person... " + person.getId());
+        System.out.println("Returning person... " + person.getIdPerson());
         return person;
     }
 
@@ -74,7 +74,7 @@ public class PersonResource {
             res = Response.noContent().build();
         } else {
             res = Response.created(uriInfo.getAbsolutePath()).build();
-            person.setId(this.id);
+            person.setIdPerson(this.id);
             Person.updatePerson(person);
         }
         return res;
@@ -90,7 +90,7 @@ public class PersonResource {
     }
 
     public Person getPersonById(int personId) {
-        System.out.println("Reading person from DB with id: "+personId);
+        System.out.println("Reading person from DB with pId: "+personId);
 
         // this will work within a Java EE container, where not DAO will be needed
         //Person person = entityManager.find(Person.class, personId); 

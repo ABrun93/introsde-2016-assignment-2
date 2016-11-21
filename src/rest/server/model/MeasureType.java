@@ -8,30 +8,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import rest.server.dao.LifeCoachDao;
-import rest.server.model.Scope;
+import rest.server.model.Measure;
 
 @Entity  // indicates that this class is an entity to persist in DB
-@Table(name="ScopeType") // to whate table must be persisted
-@NamedQuery(name="ScopeType.findAll", query="SELECT p FROM ScopeType p")
+@Table(name="MeasureType") // to whate table must be persisted
+@NamedQuery(name="MeasureType.findAll", query="SELECT p FROM MeasureType p")
 @XmlRootElement
-public class ScopeType implements Serializable {
+public class MeasureType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id // defines this attributed as the one that identifies the entity
-    @GeneratedValue
-    @Column(name="id") // maps the following attribute to a column
-    private int id;
+    // @GeneratedValue
+    @Column(name="idMeasureType") // maps the following attribute to a column
+    private int idMeasureType;
     @Column(name="type")
     private String type;
     // MappedBy must be equal to the name of the attribute in Measure that maps this relation
-    @OneToMany(mappedBy="scopeType")
-    private List<Scope> scope;
+    @OneToMany(mappedBy="measureType")
+    private List<Measure> measure;
        
-    public int getId() {
-		return id;
+    public int getIdMeasureType() {
+		return idMeasureType;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdMeasureType(int id) {
+		this.idMeasureType = id;
 	}
 
 	public String getType() {
@@ -44,30 +44,30 @@ public class ScopeType implements Serializable {
 	
 	// Transient for JAXB to avoid and infinite loop on serialization
 	@XmlTransient
-    public List<Scope> getScope() {
-        return scope;
+    public List<Measure> getMeasure() {
+        return measure;
     }
-    public void setScope(List<Scope> scope) {
-        this.scope = scope;
+    public void setMeasure(List<Measure> measure) {
+        this.measure = measure;
     }
 	
 	// Database operations
-	public static ScopeType getScopeTypeById(int personId) {
+	public static MeasureType getMeasureTypeById(int personId) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
-        ScopeType p = em.find(ScopeType.class, personId);
+        MeasureType p = em.find(MeasureType.class, personId);
         LifeCoachDao.instance.closeConnections(em);
         return p;
     }
 
-	public static List<ScopeType> getAll() {
+	public static List<MeasureType> getAll() {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
-        List<ScopeType> list = em.createNamedQuery("ScopeType.findAll", ScopeType.class)
+        List<MeasureType> list = em.createNamedQuery("MeasureType.findAll", MeasureType.class)
             .getResultList();
         LifeCoachDao.instance.closeConnections(em);
         return list;
     }
 
-    public static ScopeType saveScopeType(ScopeType p) {
+    public static MeasureType saveMeasureType(MeasureType p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -77,7 +77,7 @@ public class ScopeType implements Serializable {
         return p;
     } 
 
-    public static ScopeType updateScopeType(ScopeType p) {
+    public static MeasureType updateMeasureType(MeasureType p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager(); 
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -87,7 +87,7 @@ public class ScopeType implements Serializable {
         return p;
     }
 
-    public static void removeScopeType(ScopeType p) {
+    public static void removeMeasureType(MeasureType p) {
         EntityManager em = LifeCoachDao.instance.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();

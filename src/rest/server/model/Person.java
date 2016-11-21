@@ -1,14 +1,17 @@
 package rest.server.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import rest.server.dao.LifeCoachDao;
-import rest.server.model.Scope;
+import rest.server.model.Measure;
 
 @Entity  // indicates that this class is an entity to persist in DB
 @Table(name="Person") // to whate table must be persisted
@@ -17,25 +20,27 @@ import rest.server.model.Scope;
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id // defines this attributed as the one that identifies the entity
-    @GeneratedValue
-    @Column(name="id") // maps the following attribute to a column
-    private int id;
+    // @GeneratedValue
+    @Column(name="idPerson") // maps the following attribute to a column
+    private int idPerson;
     @Column(name="lastname")
     private String lastname;
     @Column(name="firstname")
     private String firstname;
+    @Temporal(TemporalType.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name="birthdate")
-    private String birthdate; 
+    private Date birthdate; 
     // MappedBy must be equal to the name of the attribute in Measure that maps this relation
-    @OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-    private List<Scope> scope;
+    @OneToMany(mappedBy="person")
+    private List<Measure> measure;
        
-    public int getId() {
-		return id;
+    public int getIdPerson() {
+		return idPerson;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdPerson(int id) {
+		this.idPerson = id;
 	}
 
 	public String getLastname() {
@@ -54,21 +59,22 @@ public class Person implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public String getBirthdate() {
+	public Date getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(String birthdate) {
+	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
 	
 	// Inherit elements
 	@XmlElementWrapper(name = "healthProfile")
-    public List<Scope> getScope() {
-        return scope;
+    public List<Measure> getMeasure() {
+        //return Measure.getLastMeasure(this.idPerson);
+		 return measure;
     }
-    public void setScope(List<Scope> scope) {
-        this.scope = scope;
+    public void setMeasure(List<Measure> measure) {
+        this.measure = measure;
     }
 	
 	// Database operations
