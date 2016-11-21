@@ -58,18 +58,18 @@ public class MeasureResource {
         this.type = type;
     }
        
-    @GET
-    @Produces({MediaType.TEXT_XML,  MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML })
-    public List<Measure> getHistoryByPidAndType() {
-        System.out.println("getHistory()");
-    	List<Measure> types = Measure.getMeasureByPidAndType(pId, type);
-        return types;
-    }
-
 //    @GET
 //    @Produces({MediaType.TEXT_XML,  MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML })
-//    public List<Measure> getHistoryByMidAndType() {
-//        List<Measure> types = Measure.getMeasureByMidAndType(pId, type, mId);
+//    public List<Measure> getHistoryByPidAndType() {
+//        System.out.println("getHistory()");
+//    	List<Measure> types = Measure.getMeasureByPidAndType(pId, type);
 //        return types;
 //    }
+
+    @GET
+    @Produces({MediaType.TEXT_XML,  MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML })
+    public List<Measure> getHistoryByMidAndType() {
+        List<Measure> types = Measure.getMeasureByMidAndType(pId, mId, type);
+        return types;
+    }
 }

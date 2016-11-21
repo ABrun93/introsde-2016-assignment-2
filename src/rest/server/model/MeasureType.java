@@ -14,17 +14,25 @@ import rest.server.model.Measure;
 @Table(name="MeasureType") // to whate table must be persisted
 @NamedQuery(name="MeasureType.findAll", query="SELECT p FROM MeasureType p")
 @XmlRootElement
-public class MeasureType implements Serializable {
+public class MeasureType implements Serializable 
+{
     private static final long serialVersionUID = 1L;
+    
     @Id // defines this attributed as the one that identifies the entity
-    // @GeneratedValue
+    @GeneratedValue(generator="sqlite_measuretype")
+	@TableGenerator(name="sqlite_measuretype", table="sqlite_sequence",
+				    pkColumnName="name", valueColumnName="seq",
+				    pkColumnValue="MeasureType")
+    
     @Column(name="idMeasureType") // maps the following attribute to a column
     private int idMeasureType;
+    
     @Column(name="type")
     private String type;
+    
     // MappedBy must be equal to the name of the attribute in Measure that maps this relation
-    @OneToMany(mappedBy="measureType")
-    private List<Measure> measure;
+//    @OneToMany(mappedBy="measureType")
+//    private List<Measure> measure;
        
     public int getIdMeasureType() {
 		return idMeasureType;
@@ -43,13 +51,13 @@ public class MeasureType implements Serializable {
 	}
 	
 	// Transient for JAXB to avoid and infinite loop on serialization
-	@XmlTransient
-    public List<Measure> getMeasure() {
-        return measure;
-    }
-    public void setMeasure(List<Measure> measure) {
-        this.measure = measure;
-    }
+//	@XmlTransient
+//    public List<Measure> getMeasure() {
+//        return measure;
+//    }
+//    public void setMeasure(List<Measure> measure) {
+//        this.measure = measure;
+//    }
 	
 	// Database operations
 	public static MeasureType getMeasureTypeById(int personId) {

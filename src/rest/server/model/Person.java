@@ -1,8 +1,12 @@
 package rest.server.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -20,7 +24,10 @@ import rest.server.model.Measure;
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id // defines this attributed as the one that identifies the entity
-    // @GeneratedValue
+    @GeneratedValue(generator="sqlite_person")
+    @TableGenerator(name="sqlite_person", table="sqlite_sequence",
+			        pkColumnName="name", valueColumnName="seq",
+			        pkColumnValue="Person")
     @Column(name="idPerson") // maps the following attribute to a column
     private int idPerson;
     @Column(name="lastname")
@@ -32,7 +39,7 @@ public class Person implements Serializable {
     @Column(name="birthdate")
     private Date birthdate; 
     // MappedBy must be equal to the name of the attribute in Measure that maps this relation
-    @OneToMany(mappedBy="person")
+    @OneToMany(mappedBy="person", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Measure> measure;
        
     public int getIdPerson() {
@@ -59,19 +66,21 @@ public class Person implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public Date getBirthdate() {
-		return birthdate;
+	public String getBirthdate() {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(this.birthdate);
 	}
 
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthdate(String birthdate) throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        this.birthdate = format.parse(birthdate);
 	}
 	
 	// Inherit elements
 	@XmlElementWrapper(name = "healthProfile")
     public List<Measure> getMeasure() {
-        //return Measure.getLastMeasure(this.idPerson);
-		 return measure;
+        return Measure.getLastMeasure(this.idPerson);
+		//return measure;
     }
     public void setMeasure(List<Measure> measure) {
         this.measure = measure;
