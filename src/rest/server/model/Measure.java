@@ -200,7 +200,7 @@ public class Measure implements Serializable
 		String query = "SELECT m FROM Measure m WHERE m.person.idPerson = " + pId + " AND m.idMeasure = " + mId
 				+ " AND m.measureType.idMeasureType = (SELECT mT.idMeasureType FROM MeasureType mT WHERE mT.type = \"" + type + "\")";
 				
-		System.out.println(query);
+		// System.out.println(query);
 		
 		List<Measure> measure = em.createQuery(query, Measure.class).getResultList();
 

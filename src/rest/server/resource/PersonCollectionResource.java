@@ -79,10 +79,10 @@ public class PersonCollectionResource {
         return new PersonResource(uriInfo, request, id);
     }
     
-//    @Path("{personId}/{measureType}")
-//    public MeasureResource getHistoryByPidAndType(@PathParam("personId") int pid, @PathParam("measureType") String type) {
-//        return new MeasureResource(uriInfo, request, pid, type);
-//    }
+    @Path("{personId}/{measureType}")
+    public MeasureResource getHistoryByPidAndType(@PathParam("personId") int pid, @PathParam("measureType") String type) {
+        return new MeasureResource(uriInfo, request, pid, type);
+    }
     
     @Path("{personId}/{measureType}/{measureId}")
     public MeasureResource getHistoryByMidAndType(@PathParam("personId") int pid, @PathParam("measureType") String type, @PathParam("measureId") int mid) {
