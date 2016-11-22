@@ -7,6 +7,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
@@ -64,6 +65,26 @@ public class MeasureResource {
         measure.setPerson(Person.getPersonById(pId));
                 
         return Measure.saveMeasure(measure);
+    }
+    
+    @DELETE
+    public void deleteMeasure() {
+        Measure c = getMeasureById(mId);
+        if (c == null)
+            throw new RuntimeException("Delete: Person with " + mId
+                    + " not found");
+        Measure.removeMeasure(c);
+    }
+    
+    public Measure getMeasureById(int measureId) {
+        System.out.println("Reading measure from DB with pId: "+measureId);
+
+        // this will work within a Java EE container, where not DAO will be needed
+        //Person person = entityManager.find(Person.class, personId); 
+
+        Measure measure = Measure.getMeasureById(measureId);
+        System.out.println("Person: "+measure.toString());
+        return measure;
     }
     
 	@GET
