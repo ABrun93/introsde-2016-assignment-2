@@ -30,8 +30,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class App 
 {
 	// URI of server
-	// private static final String URI = "https://introsde-2016-assignment-2.herokuapp.com/sdelab/";
-	private static final String URI = "http://localhost:5900/sdelab/";
+	private static final String URI = "https://introsde-2016-assignment-2.herokuapp.com/sdelab/";
+	// private static final String URI = "http://localhost:5900/sdelab/";
 	
 	// Files of log
 	static final String LOG_XML = "client-server-xml.log";

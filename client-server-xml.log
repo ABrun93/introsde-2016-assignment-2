@@ -1,4 +1,4 @@
-Url server: http://localhost:5900/sdelab/===============================================
+Url server: https://introsde-2016-assignment-2.herokuapp.com/sdelab/===============================================
 Request 1: GET /person Accept:Application/xml Content-type:Application/xml
 => Result: OK
 => HTTP Status: 200
