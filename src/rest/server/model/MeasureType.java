@@ -31,8 +31,8 @@ public class MeasureType implements Serializable
     private String type;
     
     // MappedBy must be equal to the name of the attribute in Measure that maps this relation
-//    @OneToMany(mappedBy="measureType")
-//    private List<Measure> measure;
+    @OneToMany(mappedBy="measureType")
+    private List<Measure> measure;
        
     public int getIdMeasureType() {
 		return idMeasureType;
@@ -51,13 +51,13 @@ public class MeasureType implements Serializable
 	}
 	
 	// Transient for JAXB to avoid and infinite loop on serialization
-//	@XmlTransient
-//    public List<Measure> getMeasure() {
-//        return measure;
-//    }
-//    public void setMeasure(List<Measure> measure) {
-//        this.measure = measure;
-//    }
+	@XmlTransient
+    public List<Measure> getMeasure() {
+        return measure;
+    }
+    public void setMeasure(List<Measure> measure) {
+        this.measure = measure;
+    }
 	
 	// Database operations
 	public static MeasureType getMeasureTypeById(int personId) {

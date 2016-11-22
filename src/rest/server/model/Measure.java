@@ -37,10 +37,12 @@ public class Measure implements Serializable
     @Column(name="value")
     private float value;
     
-    @Temporal(TemporalType.DATE)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    // TODO: Use type Date
+    // @Temporal(TemporalType.DATE)
+	// @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name="date")
-    private Date date;
+    // private Date date;
+    private String date;
       
     @ManyToOne(fetch=FetchType.LAZY)
    	@JoinColumn(name="idPerson")
@@ -68,14 +70,22 @@ public class Measure implements Serializable
 		this.value = value;
 	}
 
+//	public String getDate() {
+//		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//		return df.format(this.date);
+//	}
+	
 	public String getDate() {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		return df.format(this.date);
+		return date;
 	}
 
-	public void setDate(String date) throws ParseException {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        this.date = format.parse(date);
+//	public void setDate(String date) throws ParseException {
+//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//        this.date = format.parse(date);
+//	}
+	
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 	// Transient for JAXB to avoid and infinite loop on serialization

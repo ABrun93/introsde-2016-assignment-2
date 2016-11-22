@@ -11,6 +11,7 @@ import java.util.Locale;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -21,23 +22,32 @@ import rest.server.model.Measure;
 @Table(name="Person") // to whate table must be persisted
 @NamedQuery(name="Person.findAll", query="SELECT p FROM Person p")
 @XmlRootElement
-public class Person implements Serializable {
+public class Person implements Serializable 
+{
     private static final long serialVersionUID = 1L;
+    
     @Id // defines this attributed as the one that identifies the entity
     @GeneratedValue(generator="sqlite_person")
     @TableGenerator(name="sqlite_person", table="sqlite_sequence",
 			        pkColumnName="name", valueColumnName="seq",
 			        pkColumnValue="Person")
+    
     @Column(name="idPerson") // maps the following attribute to a column
     private int idPerson;
+    
     @Column(name="lastname")
     private String lastname;
+    
     @Column(name="firstname")
     private String firstname;
-    @Temporal(TemporalType.DATE)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    
+    // TODO: Use type Date
+    // @Temporal(TemporalType.DATE)
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name="birthdate")
-    private Date birthdate; 
+    //private Date birthdate; 
+    private String birthdate;
+    
     // MappedBy must be equal to the name of the attribute in Measure that maps this relation
     @OneToMany(mappedBy="person", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Measure> measure;
@@ -66,14 +76,22 @@ public class Person implements Serializable {
 		this.firstname = firstname;
 	}
 
+//	public String getBirthdate() {
+//		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//		return df.format(this.birthdate);
+//	}
+	
 	public String getBirthdate() {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		return df.format(this.birthdate);
+		return birthdate;
 	}
 
-	public void setBirthdate(String birthdate) throws ParseException {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        this.birthdate = format.parse(birthdate);
+//	public void setBirthdate(String birthdate) throws ParseException {
+//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+//        this.birthdate = format.parse(birthdate);
+//	}
+	
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
 	}
 	
 	// Inherit elements
@@ -82,8 +100,14 @@ public class Person implements Serializable {
         return Measure.getLastMeasure(this.idPerson);
 		//return measure;
     }
+	
     public void setMeasure(List<Measure> measure) {
         this.measure = measure;
+    }
+    
+    @XmlTransient
+    public List<Measure> getAllMeasure() {
+    	return measure;
     }
 	
 	// Database operations

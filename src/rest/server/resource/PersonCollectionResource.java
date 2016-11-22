@@ -1,5 +1,6 @@
 package rest.server.resource;
 
+import rest.server.model.Measure;
 import rest.server.model.Person;
 
 import java.io.IOException;
@@ -63,11 +64,26 @@ public class PersonCollectionResource {
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_XML)
-    @Consumes(MediaType.APPLICATION_XML)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Person newPerson(Person person) throws IOException {
         System.out.println("Creating new person...");            
-        return Person.savePerson(person);
+        
+        Person tmp = Person.savePerson(person);
+        
+        List<Measure> measures = person.getAllMeasure();
+        
+        if(measures != null)
+        {        	
+        	for(Measure m: measures)
+        	{
+        		m.setPerson(tmp);
+        		// System.out.println(m.getPerson().getIdPerson());
+        		Measure.updateMeasure(m);
+        	}	
+        }
+        
+        return tmp; 
     }
 
     // Defines that the next path parameter after the base url is
