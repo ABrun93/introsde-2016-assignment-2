@@ -1,0 +1,193 @@
+Url server: http://localhost:5900/sdelab/===============================================
+Request 1: GET /person Accept:Application/xml Content-type:Application/xml
+=> Result: OK
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8"?><people>
+  <person>
+    <birthdate>1993-06-15</birthdate>
+    <firstname>Nuovo</firstname>
+    <idPerson>1</idPerson>
+    <lastname>Fiorese</lastname>
+    <healthProfile>
+      <measure>
+        <date>2004-11-03</date>
+        <idMeasure>4</idMeasure>
+        <measureType>
+          <idMeasureType>1</idMeasureType>
+          <type>height</type>
+        </measureType>
+        <value>1.78</value>
+      </measure>
+      <measure>
+        <date>1998-07-22</date>
+        <idMeasure>11</idMeasure>
+        <measureType>
+          <idMeasureType>2</idMeasureType>
+          <type>weight</type>
+        </measureType>
+        <value>67.0</value>
+      </measure>
+    </healthProfile>
+  </person>
+  <person>
+    <birthdate>2000-04-03</birthdate>
+    <firstname>Francesca</firstname>
+    <idPerson>2</idPerson>
+    <lastname>Brun</lastname>
+    <healthProfile>
+      <measure>
+        <date>2015-02-12</date>
+        <idMeasure>3</idMeasure>
+        <measureType>
+          <idMeasureType>2</idMeasureType>
+          <type>weight</type>
+        </measureType>
+        <value>50.9</value>
+      </measure>
+    </healthProfile>
+  </person>
+  <person>
+    <birthdate>1965-03-23</birthdate>
+    <firstname>Anna Maria</firstname>
+    <idPerson>3</idPerson>
+    <lastname>Bordignon</lastname>
+  </person>
+</people>
+
+===============================================
+===============================================
+Request 2: GET /person/1 Accept:Application/xml Content-type:Application/xml
+=> Result: OK
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8"?><person>
+  <birthdate>1993-06-15</birthdate>
+  <firstname>Nuovo</firstname>
+  <idPerson>1</idPerson>
+  <lastname>Fiorese</lastname>
+  <healthProfile>
+    <measure>
+      <date>2004-11-03</date>
+      <idMeasure>4</idMeasure>
+      <measureType>
+        <idMeasureType>1</idMeasureType>
+        <type>height</type>
+      </measureType>
+      <value>1.78</value>
+    </measure>
+    <measure>
+      <date>1998-07-22</date>
+      <idMeasure>11</idMeasure>
+      <measureType>
+        <idMeasureType>2</idMeasureType>
+        <type>weight</type>
+      </measureType>
+      <value>67.0</value>
+    </measure>
+  </healthProfile>
+</person>
+
+===============================================
+===============================================
+Request 3: PUT /person/1 Accept:Application/xml Content-type:Application/xml
+=> Result: OK
+=> HTTP Status: 201
+===============================================
+===============================================
+Request 4: POST /person/ Accept:Application/xml Content-type:Application/xml
+=> Result: OK
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8"?><person>
+  <birthdate>1945-01-01</birthdate>
+  <firstname>Chuck</firstname>
+  <idPerson>7</idPerson>
+  <lastname>Norris</lastname>
+  <healthProfile>
+    <measure>
+      <date>1978-09-02</date>
+      <idMeasure>7</idMeasure>
+      <measureType>
+        <idMeasureType>1</idMeasureType>
+        <type>height</type>
+      </measureType>
+      <value>1.72</value>
+    </measure>
+    <measure>
+      <date>1978-09-02</date>
+      <idMeasure>8</idMeasure>
+      <measureType>
+        <idMeasureType>2</idMeasureType>
+        <type>weight</type>
+      </measureType>
+      <value>75.0</value>
+    </measure>
+  </healthProfile>
+</person>
+
+===============================================
+===============================================
+Request 5: DELETE /person/7 Accept:Application/xml Content-type:Application/xml
+=> Result: OK
+=> HTTP Status: 204
+===============================================
+===============================================
+Request 6: GET /measureTypes Accept:Application/xml Content-type:Application/xml
+=> Result: OK
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8"?><measureTypes>
+  <measureType>
+    <idMeasureType>1</idMeasureType>
+    <type>height</type>
+  </measureType>
+  <measureType>
+    <idMeasureType>2</idMeasureType>
+    <type>weight</type>
+  </measureType>
+  <measureType>
+    <idMeasureType>3</idMeasureType>
+    <type>steps</type>
+  </measureType>
+  <measureType>
+    <idMeasureType>4</idMeasureType>
+    <type>bloodpressure</type>
+  </measureType>
+</measureTypes>
+
+===============================================
+===============================================
+Request 7: GET /person/{idPerson}/{measureType} Accept:Application/xml Content-type:Application/xml
+=> Result: OK
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><person><birthdate>1993-06-15</birthdate><firstname>Nuovo</firstname><idPerson>1</idPerson><lastname>Fiorese</lastname><healthProfile><measure><date>2004-11-03</date><idMeasure>4</idMeasure><measureType><idMeasureType>1</idMeasureType><type>height</type></measureType><value>1.78</value></measure><measure><date>1998-07-22</date><idMeasure>11</idMeasure><measureType><idMeasureType>2</idMeasureType><type>weight</type></measureType><value>67.0</value></measure></healthProfile></person><?xml version="1.0" encoding="UTF-8" standalone="yes"?><person><birthdate>1993-06-15</birthdate><firstname>Nuovo</firstname><idPerson>1</idPerson><lastname>Fiorese</lastname><healthProfile><measure><date>2004-11-03</date><idMeasure>4</idMeasure><measureType><idMeasureType>1</idMeasureType><type>height</type></measureType><value>1.78</value></measure><measure><date>1998-07-22</date><idMeasure>11</idMeasure><measureType><idMeasureType>2</idMeasureType><type>weight</type></measureType><value>67.0</value></measure></healthProfile></person><?xml version="1.0" encoding="UTF-8" standalone="yes"?><person><birthdate>1993-06-15</birthdate><firstname>Nuovo</firstname><idPerson>1</idPerson><lastname>Fiorese</lastname><healthProfile><measure><date>2004-11-03</date><idMeasure>4</idMeasure><measureType><idMeasureType>1</idMeasureType><type>height</type></measureType><value>1.78</value></measure><measure><date>1998-07-22</date><idMeasure>11</idMeasure><measureType><idMeasureType>2</idMeasureType><type>weight</type></measureType><value>67.0</value></measure></healthProfile></person><?xml version="1.0" encoding="UTF-8" standalone="yes"?><person><birthdate>1993-06-15</birthdate><firstname>Nuovo</firstname><idPerson>1</idPerson><lastname>Fiorese</lastname><healthProfile><measure><date>2004-11-03</date><idMeasure>4</idMeasure><measureType><idMeasureType>1</idMeasureType><type>height</type></measureType><value>1.78</value></measure><measure><date>1998-07-22</date><idMeasure>11</idMeasure><measureType><idMeasureType>2</idMeasureType><type>weight</type></measureType><value>67.0</value></measure></healthProfile></person>
+===============================================
+===============================================
+Request 8: GET /person/1/height/1 Accept:Application/xml Content-type:Application/xml
+=> Result: OK
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8"?><measures>
+  <measure>
+    <date>1998-07-21</date>
+    <idMeasure>1</idMeasure>
+    <measureType>
+      <idMeasureType>1</idMeasureType>
+      <type>height</type>
+    </measureType>
+    <value>1.72</value>
+  </measure>
+</measures>
+
+===============================================
+===============================================
+Request 9: POST /person/1/height Accept:Application/xml Content-type:Application/xml
+=> Result: ERROR
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8"?><measure>
+  <date>2011-12-09</date>
+  <idMeasure>17</idMeasure>
+  <measureType>
+    <idMeasureType>1</idMeasureType>
+    <type>height</type>
+  </measureType>
+  <value>72.0</value>
+</measure>
+
+===============================================

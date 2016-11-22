@@ -1,0 +1,180 @@
+Url server: http://localhost:5900/sdelab/===============================================
+
+Request 1: GET /person Accept:Application/json Content-type:Application/json
+=> Result: OK
+=> HTTP Status: 200
+[ {
+  "idPerson" : 1,
+  "lastname" : "Fiorese",
+  "firstname" : "Nuovo",
+  "birthdate" : "1993-06-15",
+  "measure" : [ {
+    "idMeasure" : 4,
+    "value" : 1.78,
+    "date" : "2004-11-03",
+    "measureType" : {
+      "idMeasureType" : 1,
+      "type" : "height"
+    }
+  }, {
+    "idMeasure" : 11,
+    "value" : 67.0,
+    "date" : "1998-07-22",
+    "measureType" : {
+      "idMeasureType" : 2,
+      "type" : "weight"
+    }
+  } ]
+}, {
+  "idPerson" : 2,
+  "lastname" : "Brun",
+  "firstname" : "Francesca",
+  "birthdate" : "2000-04-03",
+  "measure" : [ {
+    "idMeasure" : 3,
+    "value" : 50.9,
+    "date" : "2015-02-12",
+    "measureType" : {
+      "idMeasureType" : 2,
+      "type" : "weight"
+    }
+  } ]
+}, {
+  "idPerson" : 3,
+  "lastname" : "Bordignon",
+  "firstname" : "Anna Maria",
+  "birthdate" : "1965-03-23"
+} ]
+===============================================
+===============================================
+
+Request 2: GET /person/1 Accept:Application/json Content-type:Application/json
+=> Result: OK
+=> HTTP Status: 200
+{
+  "idPerson" : 1,
+  "lastname" : "Fiorese",
+  "firstname" : "Nuovo",
+  "birthdate" : "1993-06-15",
+  "measure" : [ {
+    "idMeasure" : 4,
+    "value" : 1.78,
+    "date" : "2004-11-03",
+    "measureType" : {
+      "idMeasureType" : 1,
+      "type" : "height"
+    }
+  }, {
+    "idMeasure" : 11,
+    "value" : 67.0,
+    "date" : "1998-07-22",
+    "measureType" : {
+      "idMeasureType" : 2,
+      "type" : "weight"
+    }
+  } ]
+}
+===============================================
+===============================================
+
+Request 3: PUT /person/1 Accept:Application/json Content-type:Application/json
+=> Result: OK
+=> HTTP Status: 201
+===============================================
+===============================================
+
+Request 4: POST /person/ Accept:Application/json Content-type:Application/json
+=> Result: OK
+=> HTTP Status: 200
+{
+  "idPerson" : 8,
+  "lastname" : "Norris",
+  "firstname" : "Chuck",
+  "birthdate" : "1945-01-01",
+  "measure" : [ {
+    "idMeasure" : 9,
+    "value" : 1.72,
+    "date" : "1978-09-02",
+    "measureType" : {
+      "idMeasureType" : 1,
+      "type" : "height"
+    }
+  }, {
+    "idMeasure" : 10,
+    "value" : 78.9,
+    "date" : "1978-09-02",
+    "measureType" : {
+      "idMeasureType" : 2,
+      "type" : "weight"
+    }
+  } ]
+}
+===============================================
+===============================================
+Request 5: DELETE /person/7 Accept:Application/xml Content-type:Application/xml
+
+Request 5: DELETE /person/8 Accept:Application/json Content-type:Application/json
+=> Result: OK
+=> HTTP Status: 204
+===============================================
+===============================================
+
+Request 6: GET /measureTypes Accept:Application/json Content-type:Application/json
+=> Result: OK
+=> HTTP Status: 200
+[ {
+  "idMeasureType" : 1,
+  "type" : "height"
+}, {
+  "idMeasureType" : 2,
+  "type" : "weight"
+}, {
+  "idMeasureType" : 3,
+  "type" : "steps"
+}, {
+  "idMeasureType" : 4,
+  "type" : "bloodpressure"
+} ]
+===============================================
+===============================================
+
+Request 7: GET /person/{idPerson}/{measureType} Accept:Application/json Content-type:Application/json
+=> Result: ERROR
+=> HTTP Status: 200
+{
+  "idPerson" : 3,
+  "lastname" : "Bordignon",
+  "firstname" : "Anna Maria",
+  "birthdate" : "1965-03-23"
+}
+===============================================
+===============================================
+
+Request 8: GET /person/1/height/1 Accept:Application/json Content-type:Application/json
+=> Result: OK
+=> HTTP Status: 200
+[ {
+  "idMeasure" : 1,
+  "value" : 1.72,
+  "date" : "1998-07-21",
+  "measureType" : {
+    "idMeasureType" : 1,
+    "type" : "height"
+  }
+} ]
+===============================================
+===============================================
+
+Request 9: POST /person/1/height Accept:Application/json Content-type:Application/json
+=> Result: OK
+=> HTTP Status: 200
+{
+  "idMeasure" : 18,
+  "value" : 72.0,
+  "date" : "2011-12-09",
+  "measureType" : {
+    "idMeasureType" : 1,
+    "type" : "height"
+  }
+}
+===============================================

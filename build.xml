@@ -113,6 +113,19 @@
             </classpath>
         </java>
     </target>
+	
+	<target name="execute.evaluation" depends="install">
+	        <echo message="============================================================================================" />
+			<echo message="Executing the Client" />
+			<java classname="rest.client.App" classpath= "${build.dir}">
+	            <classpath>
+	                <fileset dir="${lib.dir}">
+	                    <include name="**/*.jar" />
+	                    <include name="*.jar" />
+	                </fileset>
+	            </classpath>
+	        </java>
+	</target>
 
 	<!-- make sure you have created first the WebContent folder, including a META-INF folder, WEB-INF/web.xml file and WEB-INF/lib folder --> 
 	<target name="create.war" depends="install">
