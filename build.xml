@@ -114,7 +114,7 @@
         </java>
     </target>
 	
-	<target name="execute.evaluation" depends="install">
+	<target name="execute.client">
 	        <echo message="============================================================================================" />
 			<echo message="Executing the Client" />
 			<java classname="rest.client.App" classpath= "${build.dir}">
