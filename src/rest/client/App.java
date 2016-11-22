@@ -770,8 +770,8 @@ public class App
 		logXml += "===============================================\n";
     	logJson += "===============================================\n";
     	
-    	//response = service.path("person/1/hight/17").request().accept(MediaType.APPLICATION_XML).delete();
-    	//response = service.path("person/1/hight/18").request().accept(MediaType.APPLICATION_JSON).delete();
+    	response = service.path("person/1/hight/17").request().accept(MediaType.APPLICATION_XML).delete();
+    	response = service.path("person/1/hight/18").request().accept(MediaType.APPLICATION_JSON).delete();
     }
     
     private String execRequest10()
